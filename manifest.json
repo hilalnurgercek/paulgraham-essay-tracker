@@ -7,7 +7,7 @@
   "content_scripts": [
     {
       "matches": ["https://paulgraham.com/articles.html"],
-      "js": ["content.js"],
+      "js": ["content.js", "favorites.js"],
       "run_at": "document_idle"
     }
   ]
