@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Paul Graham Essay Tracker",
+  "version": "1.0.0",
+  "description": "Add persistent read checkboxes to Paul Graham's essays page.",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://paulgraham.com/articles.html"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
