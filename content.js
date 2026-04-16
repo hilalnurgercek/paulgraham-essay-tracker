@@ -18,8 +18,8 @@
     );
   });
 
-  const uniqueLinks = [];
-  const seen = new Set();
+  const essayLinks = [];
+  const checkboxesByUrl = new Map();
 
   for (const link of links) {
     const absoluteUrl = new URL(link.getAttribute("href"), location.href).href;
@@ -27,16 +27,13 @@
 
     if (!text) continue;
     if (absoluteUrl === pageUrl) continue;
-    if (seen.has(absoluteUrl)) continue;
-
-    seen.add(absoluteUrl);
-    uniqueLinks.push({ link, absoluteUrl });
+    essayLinks.push({ link, absoluteUrl });
   }
 
   const stored = await chrome.storage.local.get(STORAGE_KEY);
   const readEssayUrls = stored[STORAGE_KEY] || {};
 
-  for (const { link, absoluteUrl } of uniqueLinks) {
+  for (const { link, absoluteUrl } of essayLinks) {
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.checked = Boolean(readEssayUrls[absoluteUrl]);
@@ -44,8 +41,16 @@
     checkbox.style.verticalAlign = "middle";
     checkbox.title = "Mark essay as read";
 
+    if (!checkboxesByUrl.has(absoluteUrl)) {
+      checkboxesByUrl.set(absoluteUrl, []);
+    }
+    checkboxesByUrl.get(absoluteUrl).push(checkbox);
+
     checkbox.addEventListener("change", async () => {
       readEssayUrls[absoluteUrl] = checkbox.checked;
+      for (const relatedCheckbox of checkboxesByUrl.get(absoluteUrl) || []) {
+        relatedCheckbox.checked = checkbox.checked;
+      }
       await chrome.storage.local.set({ [STORAGE_KEY]: readEssayUrls });
     });
 
