@@ -23,4 +23,6 @@ Favorited essays are shown with a filled star (`★`) and highlighted text.
 Happy readingss
 
 
-<img width="349" height="354" alt="image" src="https://github.com/user-attachments/assets/0c034625-660d-4da0-9ef0-891ed5fb8d75" />
+<img width="318" height="336" alt="image" src="https://github.com/user-attachments/assets/22cff5ab-0068-49dd-bdec-e720b10d623d" />
+
+
